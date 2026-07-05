@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marmitas Congeladas da Semana — Economize até R$500/mês no almoço</title>
+<meta name="description" content="O método completo para organizar as marmitas da semana em um único dia de preparo: 20 receitas com custo por porção, cardápio de 4 semanas e cronograma passo a passo.">
+<meta property="og:title" content="Marmitas Congeladas da Semana">
+<meta property="og:description" content="Pare de gastar R$550/mês com almoço na rua. Cozinhe 1 vez, coma a semana inteira.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --verde:#1E5128;
+  --verde-vivo:#2E7D32;
+  --laranja:#F57C00;
+  --laranja-esc:#D96A00;
+  --creme:#FBF6EE;
+  --escuro:#22302A;
+  --branco:#FFFFFF;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Karla',sans-serif;color:var(--escuro);background:var(--creme);line-height:1.6;font-size:17px}
+h1,h2,h3,.display{font-family:'Bricolage Grotesque',sans-serif}
+.wrap{max-width:1020px;margin:0 auto;padding:0 22px}
+section{padding:64px 0}
+
+/* ---------- HERO ---------- */
+.hero{background:linear-gradient(160deg,var(--verde) 0%,var(--verde-vivo) 100%);color:var(--branco);padding:56px 0 72px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.06)}
+.hero::before{content:"";position:absolute;left:-90px;bottom:-140px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.05)}
+.hero .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:44px;align-items:center;position:relative;z-index:1}
+.eyebrow{display:inline-block;background:var(--laranja);color:#fff;font-weight:700;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-size:clamp(2rem,5vw,3.1rem);font-weight:800;line-height:1.12;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:#FFD08A}
+.hero p.sub{font-size:1.12rem;color:#E4F0E4;max-width:34rem;margin-bottom:26px}
+.hero .mini-provas{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;font-size:.92rem;color:#CFE6CF}
+.hero .mini-provas span::before{content:"✓ ";color:#FFD08A;font-weight:700}
+
+/* livro mockup */
+.book{width:min(260px,70vw);aspect-ratio:210/297;margin:0 auto;background:linear-gradient(160deg,#2E7D32,#1E5128);border-radius:6px 14px 14px 6px;box-shadow:18px 24px 40px rgba(0,0,0,.35),inset 8px 0 0 rgba(0,0,0,.22);position:relative;transform:rotate(2deg);display:flex;flex-direction:column;justify-content:center;padding:26px 20px;text-align:center}
+.book::before{content:"";position:absolute;left:0;top:0;bottom:0;width:10px;background:rgba(0,0,0,.25);border-radius:6px 0 0 6px}
+.book .faixa{height:5px;background:var(--laranja);margin:14px auto;width:70%}
+.book h3{font-size:1.28rem;font-weight:800;color:#fff;line-height:1.2}
+.book small{color:#DFF0DF;font-size:.7rem;letter-spacing:.05em;display:block;margin-top:10px;line-height:1.5}
+.book .selo{position:absolute;top:-16px;right:-16px;background:var(--laranja);color:#fff;font-family:'Bricolage Grotesque';font-weight:800;width:84px;height:84px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.72rem;line-height:1.15;transform:rotate(10deg);box-shadow:0 6px 16px rgba(0,0,0,.3);padding:8px}
+
+/* ---------- CTA ---------- */
+.btn{display:inline-block;background:var(--laranja);color:#fff;font-family:'Bricolage Grotesque';font-weight:800;font-size:1.12rem;padding:17px 36px;border-radius:14px;text-decoration:none;box-shadow:0 6px 0 var(--laranja-esc),0 14px 26px rgba(245,124,0,.35);transition:transform .12s ease,box-shadow .12s ease;text-align:center}
+.btn:hover{transform:translateY(2px);box-shadow:0 4px 0 var(--laranja-esc),0 10px 20px rgba(245,124,0,.3)}
+.btn small{display:block;font-family:'Karla';font-weight:500;font-size:.8rem;opacity:.92;margin-top:3px}
+.btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+/* ---------- DOR / CONTA ---------- */
+.dor h2,.calc h2,.metodo h2,.conteudo h2,.publico h2,.oferta h2,.faq h2{font-size:clamp(1.6rem,3.6vw,2.3rem);font-weight:800;color:var(--verde);margin-bottom:14px;line-height:1.18}
+.dor p.lead{max-width:40rem;margin-bottom:26px}
+.conta{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.conta .card{background:#fff;border-radius:16px;padding:24px 20px;border:1.5px solid #E3DDD0;text-align:center}
+.conta .card.destaque{border:2.5px solid var(--verde-vivo);background:#EDF6ED}
+.conta .card .rotulo{font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:#6B7A6B;font-weight:700}
+.conta .card .valor{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.9rem;color:var(--escuro);margin:6px 0 2px}
+.conta .card.destaque .valor{color:var(--verde-vivo)}
+.conta .card .por{font-size:.85rem;color:#6B7A6B}
+
+/* ---------- CALCULADORA (assinatura) ---------- */
+.calc{background:var(--escuro);color:#fff}
+.calc h2{color:#fff}
+.calc .grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.calc label{font-weight:700;display:block;margin-bottom:14px;color:#D9E4D9}
+.calc output{font-family:'Bricolage Grotesque';font-weight:800;font-size:2.4rem;color:#FFD08A;display:block;margin-bottom:6px}
+input[type=range]{width:100%;accent-color:var(--laranja);height:34px;cursor:pointer}
+.calc .resultado{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);border-radius:18px;padding:28px}
+.calc .resultado .linha{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px dashed rgba(255,255,255,.18)}
+.calc .resultado .linha:last-child{border-bottom:none}
+.calc .resultado .linha .num{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.5rem;color:#fff}
+.calc .resultado .linha.grande .num{font-size:2.1rem;color:var(--laranja)}
+.calc p.nota{font-size:.85rem;color:#9FB09F;margin-top:14px}
+
+/* quiz do plano */
+.passo{font-family:'Bricolage Grotesque';font-weight:800;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--laranja);margin:26px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.25);color:#E4F0E4;border-radius:999px;padding:10px 18px;font-family:'Karla';font-weight:700;font-size:.95rem;cursor:pointer;transition:all .12s ease}
+.chip[aria-pressed="true"]{background:var(--laranja);border-color:var(--laranja);color:#fff}
+.chip:focus-visible{outline:3px solid #FFD08A;outline-offset:2px}
+.btn-gerar{margin-top:26px;width:100%;border:none;cursor:pointer}
+.plano-res{margin-top:30px;background:#fff;color:var(--escuro);border-radius:20px;padding:28px;display:none}
+.plano-res.on{display:block;animation:sobe .35s ease}
+@keyframes sobe{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.plano-res h3{color:var(--verde);font-size:1.3rem;margin-bottom:4px}
+.plano-res .sub{color:#6B7A6B;font-size:.9rem;margin-bottom:16px}
+.cardapio{list-style:none}
+.cardapio li{display:flex;gap:12px;align-items:baseline;padding:10px 0;border-bottom:1px dashed #E3DDD0;font-size:.97rem}
+.cardapio li .d{flex:0 0 44px;font-family:'Bricolage Grotesque';font-weight:800;color:var(--laranja);font-size:.85rem}
+.cardapio li .c{margin-left:auto;font-weight:700;color:var(--verde);white-space:nowrap;font-size:.9rem}
+.plano-metricas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.pm{background:var(--creme);border-radius:14px;padding:14px 12px;text-align:center}
+.pm .r{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:#6B7A6B;font-weight:700}
+.pm .v{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.35rem;color:var(--verde);margin-top:2px}
+.pm.eco .v{color:var(--laranja)}
+.badge-orc{display:inline-block;margin-top:16px;padding:8px 16px;border-radius:999px;font-weight:700;font-size:.88rem}
+.badge-orc.ok{background:#EDF6ED;color:var(--verde);border:1.5px solid #BBDCBB}
+.badge-orc.apertado{background:#FDF0E3;color:var(--laranja-esc);border:1.5px solid #F2CFA6}
+.notas-freezer{margin-top:16px;background:#F3F8F3;border-left:4px solid var(--verde-vivo);border-radius:0 12px 12px 0;padding:14px 16px}
+.notas-freezer .t{font-family:'Bricolage Grotesque';font-weight:800;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--verde);margin-bottom:6px}
+.notas-freezer li{margin:5px 0 5px 18px;font-size:.88rem;color:#4C594C}
+.plano-res .btn{display:block;margin-top:22px}
+@media (max-width:780px){.plano-metricas{grid-template-columns:1fr 1fr}.pm:last-child{grid-column:1/-1}}
+
+/* ---------- MÉTODO ---------- */
+.etapas{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:28px}
+.etapa{background:#fff;border-radius:16px;padding:22px 18px;border:1.5px solid #E3DDD0}
+.etapa .dia{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--laranja);margin-bottom:6px}
+.etapa h3{font-size:1.05rem;color:var(--verde);margin-bottom:6px}
+.etapa p{font-size:.92rem;color:#4C594C}
+
+/* ---------- CONTEÚDO ---------- */
+.conteudo{background:#fff}
+.itens{display:grid;grid-template-columns:1fr 1fr;gap:14px 26px;margin-top:24px}
+.item{display:flex;gap:12px;align-items:flex-start}
+.item .chk{flex:0 0 26px;height:26px;border-radius:8px;background:var(--verde-vivo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;margin-top:2px}
+.item b{color:var(--verde)}
+
+/* ---------- PÚBLICO ---------- */
+.publico .duas{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
+.publico .col{border-radius:16px;padding:24px}
+.publico .sim{background:#EDF6ED;border:1.5px solid #BBDCBB}
+.publico .nao{background:#FDF0E3;border:1.5px solid #F2CFA6}
+.publico h3{margin-bottom:12px;font-size:1.15rem}
+.publico .sim h3{color:var(--verde)}
+.publico .nao h3{color:var(--laranja-esc)}
+.publico li{margin:8px 0 8px 20px;font-size:.97rem}
+
+/* ---------- OFERTA ---------- */
+.oferta{background:linear-gradient(160deg,var(--verde) 0%,var(--verde-vivo) 100%);color:#fff;text-align:center}
+.oferta h2{color:#fff}
+.oferta .caixa{background:#fff;color:var(--escuro);border-radius:22px;max-width:480px;margin:30px auto 0;padding:36px 30px;box-shadow:0 24px 60px rgba(0,0,0,.3)}
+.oferta .antes{color:#8A8A8A;text-decoration:line-through;font-size:1.05rem}
+.oferta .preco{font-family:'Bricolage Grotesque';font-weight:800;font-size:3.2rem;color:var(--verde);line-height:1.05}
+.oferta .preco span{font-size:1.2rem}
+.oferta ul{list-style:none;text-align:left;margin:20px 0 26px}
+.oferta ul li{padding:7px 0;font-size:.97rem}
+.oferta ul li::before{content:"✓  ";color:var(--verde-vivo);font-weight:700}
+.garantia{display:flex;gap:14px;align-items:center;background:#EDF6ED;border-radius:14px;padding:14px 16px;margin-top:22px;text-align:left}
+.garantia .selo7{flex:0 0 56px;height:56px;border-radius:50%;background:var(--verde-vivo);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque';font-weight:800;font-size:1.2rem}
+.garantia p{font-size:.88rem;line-height:1.45}
+
+/* ---------- FAQ ---------- */
+.faq details{background:#fff;border:1.5px solid #E3DDD0;border-radius:14px;margin-bottom:12px;overflow:hidden}
+.faq summary{cursor:pointer;padding:18px 20px;font-weight:700;color:var(--verde);list-style:none;display:flex;justify-content:space-between;align-items:center}
+.faq summary::after{content:"+";font-family:'Bricolage Grotesque';font-weight:800;font-size:1.3rem;color:var(--laranja)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{padding:0 20px 18px;color:#4C594C;font-size:.97rem}
+
+/* ---------- RODAPÉ + BARRA FIXA ---------- */
+footer{background:var(--escuro);color:#9FB09F;text-align:center;padding:34px 22px 110px;font-size:.82rem;line-height:1.7}
+.barra-fixa{position:fixed;bottom:0;left:0;right:0;background:#fff;box-shadow:0 -6px 24px rgba(0,0,0,.14);padding:12px 18px;display:flex;align-items:center;justify-content:center;gap:16px;z-index:50}
+.barra-fixa .p{font-family:'Bricolage Grotesque';font-weight:800;color:var(--verde);font-size:1.15rem;white-space:nowrap}
+.barra-fixa .p small{display:block;font-family:'Karla';font-weight:500;color:#8A8A8A;font-size:.72rem}
+.barra-fixa .btn{padding:12px 26px;font-size:1rem;box-shadow:0 4px 0 var(--laranja-esc)}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+@media (max-width:780px){
+  section{padding:48px 0}
+  .hero .wrap{grid-template-columns:1fr;gap:36px}
+  .hero{text-align:center}
+  .hero .mini-provas{justify-content:center}
+  .conta{grid-template-columns:1fr}
+  .calc .grid{grid-template-columns:1fr}
+  .etapas{grid-template-columns:1fr 1fr}
+  .itens{grid-template-columns:1fr}
+  .publico .duas{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Ebook + método completo</span>
+      <h1>Cozinhe <em>uma vez no domingo</em> e resolva o almoço da semana inteira — gastando até R$500 a menos por mês</h1>
+      <p class="sub">O método passo a passo para quem trabalha fora: marmitas congeladas organizadas, saborosas e econômicas, sem passar a vida na cozinha.</p>
+      <a class="btn" href="#oferta">QUERO ECONOMIZAR NO ALMOÇO<small>Acesso imediato · leia no celular ou imprima</small></a>
+      <div class="mini-provas">
+        <span>20 receitas com custo por porção</span>
+        <span>Cardápio pronto de 4 semanas</span>
+        <span>Cronograma de preparo em 2h30</span>
+      </div>
+    </div>
+    <div>
+      <div class="book">
+        <div class="selo">MÉTODO<br>COMPLETO</div>
+        <div class="faixa"></div>
+        <h3>MARMITAS CONGELADAS DA SEMANA</h3>
+        <small>ORGANIZE · CONGELE · ECONOMIZE<br>22 páginas direto ao ponto</small>
+        <div class="faixa"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ DOR / A CONTA ============ -->
+<section class="dor">
+  <div class="wrap">
+    <h2>Faça a conta que ninguém quer fazer</h2>
+    <p class="lead">Um PF simples com bebida raramente sai por menos de R$25. Quem trabalha em regime CLT almoça fora, em média, 22 dias por mês. O resultado no fim do ano assusta:</p>
+    <div class="conta">
+      <div class="card">
+        <div class="rotulo">PF na rua</div>
+        <div class="valor">R$ 6.600</div>
+        <div class="por">por ano (R$550/mês)</div>
+      </div>
+      <div class="card">
+        <div class="rotulo">Pedido no aplicativo</div>
+        <div class="valor">R$ 8.448</div>
+        <div class="por">por ano (R$704/mês)</div>
+      </div>
+      <div class="card destaque">
+        <div class="rotulo">Marmita congelada caseira</div>
+        <div class="valor">R$ 2.376</div>
+        <div class="por">por ano (≈ R$9 por refeição)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MONTE SEU PLANO ============ -->
+<section class="calc" id="plano">
+  <div class="wrap">
+    <h2>Monte GRÁTIS uma amostra do seu plano</h2>
+    <p style="color:#D9E4D9;max-width:38rem">Responda 3 perguntas e veja na hora como ficaria a sua semana de marmitas — com os pratos que você gosta e dentro do seu bolso.</p>
+
+    <div class="passo">Passo 1 — O que você gosta de comer? (toque para marcar)</div>
+    <div class="chips" id="gostos" role="group" aria-label="Preferências de comida">
+      <button class="chip" data-tag="frango" aria-pressed="true">🍗 Frango</button>
+      <button class="chip" data-tag="carne" aria-pressed="true">🥩 Carne</button>
+      <button class="chip" data-tag="ovos" aria-pressed="false">🍳 Ovos</button>
+      <button class="chip" data-tag="massas" aria-pressed="false">🍝 Massas</button>
+      <button class="chip" data-tag="raizes" aria-pressed="false">🍠 Mandioca &amp; raízes</button>
+      <button class="chip" data-tag="vegetariano" aria-pressed="false">🥦 Vegetariano</button>
+    </div>
+
+    <div class="grid" style="margin-top:6px">
+      <div>
+        <div class="passo">Passo 2 — Quanto você gasta HOJE por almoço na rua?</div>
+        <output id="valorDia">R$ 25</output>
+        <input type="range" id="gasto" min="15" max="60" step="1" value="25" aria-label="Gasto atual por almoço">
+      </div>
+      <div>
+        <div class="passo">Passo 3 — Quanto pode gastar POR MÊS com as marmitas?</div>
+        <output id="valorOrc">R$ 250</output>
+        <input type="range" id="orcamento" min="90" max="450" step="10" value="250" aria-label="Orçamento mensal para marmitas">
+      </div>
+    </div>
+
+    <button class="btn btn-gerar" id="gerar">GERAR MINHA SEMANA DE MARMITAS<small>grátis · resultado na hora</small></button>
+
+    <div class="plano-res" id="resultado" aria-live="polite">
+      <h3>Sua semana de marmitas</h3>
+      <p class="sub" id="resSub">Receitas montadas na hora pela fórmula do ebook — <b style="color:var(--verde)">tudo 100% testado e aprovado para congelamento</b> — com os seus gostos e dentro do seu orçamento:</p>
+      <ul class="cardapio" id="cardapio"></ul>
+      <button class="chip" id="regerar" style="background:var(--creme);border-color:#E3DDD0;color:var(--verde);margin-top:14px" aria-pressed="false">↻ Gerar outra combinação</button>
+      <div class="notas-freezer" id="notasFreezer" style="display:none">
+        <div class="t">🧊 Adaptações pró-freezer (é assim que o método funciona)</div>
+        <ul id="notasLista"></ul>
+      </div>
+      <div class="plano-metricas">
+        <div class="pm"><div class="r">Custo por marmita</div><div class="v" id="pmMarmita">—</div></div>
+        <div class="pm"><div class="r">Gasto mensal (22 dias)</div><div class="v" id="pmMes">—</div></div>
+        <div class="pm eco"><div class="r">Economia em 1 ano</div><div class="v" id="pmAno">—</div></div>
+      </div>
+      <span class="badge-orc ok" id="badgeOrc">✓ Cabe no seu orçamento</span>
+      <p class="sub" style="margin-top:14px">Gostou da amostra? O ebook traz o cardápio completo de 4 semanas, as 20 receitas com passo a passo, a lista de compras e o cronograma pra fazer tudo em 2h30.</p>
+      <a class="btn" href="#oferta">QUERO O PLANO COMPLETO POR R$ 19,90<small>acesso imediato</small></a>
+    </div>
+    <p class="nota" style="margin-top:16px">Custos por porção são estimativas médias para planejamento e variam por região.</p>
+  </div>
+</section>
+
+<!-- ============ MÉTODO ============ -->
+<section class="metodo">
+  <div class="wrap">
+    <h2>Como funciona o método</h2>
+    <p>Nada de cozinhar todo dia. O ciclo é semanal e cabe em qualquer rotina:</p>
+    <div class="etapas">
+      <div class="etapa"><div class="dia">Sexta · 10 min</div><h3>Planejar</h3><p>Escolha uma das 4 semanas de cardápio pronto e gere a lista de compras.</p></div>
+      <div class="etapa"><div class="dia">Sábado · 1h</div><h3>Comprar</h3><p>Uma ida só ao mercado, com lista fechada. Sem impulso, sem desperdício.</p></div>
+      <div class="etapa"><div class="dia">Domingo · 2h30</div><h3>Preparar</h3><p>Siga o cronograma minuto a minuto e monte 10 marmitas em linha de produção.</p></div>
+      <div class="etapa"><div class="dia">Seg a sex · 5 min</div><h3>Só esquentar</h3><p>Freezer → micro-ondas. Almoço resolvido antes das 12h05.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTEÚDO ============ -->
+<section class="conteudo">
+  <div class="wrap">
+    <h2>O que você recebe no ebook</h2>
+    <div class="itens">
+      <div class="item"><div class="chk">✓</div><p><b>20 receitas econômicas</b> testadas para freezer, com custo estimado por porção e dicas de preparo.</p></div>
+      <div class="item"><div class="chk">✓</div><p><b>Cardápio pronto de 4 semanas</b> — você não decide nada, só segue.</p></div>
+      <div class="item"><div class="chk">✓</div><p><b>Cronograma do domingo minuto a minuto</b>: 10 marmitas em 2h30, com forno e fogão trabalhando juntos.</p></div>
+      <div class="item"><div class="chk">✓</div><p><b>Regras de ouro do congelamento</b>: prazos, o que congela bem, o que evitar e descongelamento seguro.</p></div>
+      <div class="item"><div class="chk">✓</div><p><b>Lista de compras base de ~R$126</b> que rende 10 marmitas + estratégia de compras no atacarejo.</p></div>
+      <div class="item"><div class="chk">✓</div><p><b>A fórmula da marmita perfeita</b> (proporção exata de proteína, carboidrato, leguminosa e legumes).</p></div>
+      <div class="item"><div class="chk">✓</div><p><b>Checklists e planner semanal</b> para imprimir e colar na geladeira.</p></div>
+      <div class="item"><div class="chk">✓</div><p><b>Truques de sabor pós-freezer</b> para a marmita chegar na quinta-feira gostosa como na segunda.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PÚBLICO ============ -->
+<section class="publico">
+  <div class="wrap">
+    <h2>É pra você?</h2>
+    <div class="duas">
+      <div class="col sim">
+        <h3>Este ebook é para quem…</h3>
+        <ul>
+          <li>Trabalha fora e gasta demais com PF ou aplicativo;</li>
+          <li>Quer comer melhor sem cozinhar todo santo dia;</li>
+          <li>Já tentou levar marmita e desistiu por falta de organização;</li>
+          <li>Cozinha o básico (arroz, feijão, um refogado) e quer um sistema.</li>
+        </ul>
+      </div>
+      <div class="col nao">
+        <h3>Não é para quem…</h3>
+        <ul>
+          <li>Procura receitas gourmet elaboradas;</li>
+          <li>Quer dieta ou plano nutricional individualizado;</li>
+          <li>Não tem freezer ou congelador em casa;</li>
+          <li>Espera resultado sem reservar 2h30 na semana.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OFERTA ============ -->
+<section class="oferta" id="oferta">
+  <div class="wrap">
+    <h2>Quanto custa parar de perder dinheiro?</h2>
+    <p>Menos que <b>um único dia</b> de almoço na rua.</p>
+    <div class="caixa">
+      <div class="antes">De R$ 47</div>
+      <div class="preco"><span>R$</span> 19,90</div>
+      <p style="color:#6B7A6B;font-size:.9rem">pagamento único · acesso imediato</p>
+      <ul>
+        <li>Ebook completo em PDF (22 páginas)</li>
+        <li>20 receitas + cardápio de 4 semanas</li>
+        <li>Cronograma de preparo passo a passo</li>
+        <li>Checklists e planner para imprimir</li>
+        <li>Leia no celular, computador ou imprima</li>
+      </ul>
+      <a class="btn" href="COLE_AQUI_SEU_LINK_DE_CHECKOUT" style="display:block">GARANTIR MEU EBOOK AGORA<small>Compra segura · Pix ou cartão</small></a>
+      <div class="garantia">
+        <div class="selo7">7d</div>
+        <p><b>Garantia incondicional de 7 dias.</b> Se você achar que o método não é pra você, devolvemos 100% do valor direto pela plataforma. Sem perguntas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq">
+  <div class="wrap">
+    <h2>Perguntas frequentes</h2>
+    <details>
+      <summary>Preciso saber cozinhar bem?</summary>
+      <p>Não. Se você faz arroz, feijão e um refogado, consegue executar tudo. As receitas são simples de propósito — o diferencial do método é a organização, não a técnica.</p>
+    </details>
+    <details>
+      <summary>A comida congelada não fica sem graça?</summary>
+      <p>Fica, quando é congelada errado. O ebook ensina exatamente o que congela bem, o que evitar (batata, folhas, macarrão passado do ponto) e os truques de tempero e montagem que mantêm o sabor.</p>
+    </details>
+    <details>
+      <summary>Serve para quem mora sozinho? E para família?</summary>
+      <p>Serve para os dois. O padrão é 10 marmitas por preparo — uma semana de almoço e janta para uma pessoa, ou uma semana de almoços para duas. Para família, basta multiplicar as quantidades.</p>
+    </details>
+    <details>
+      <summary>Quanto vou gastar por semana no mercado?</summary>
+      <p>A lista base do ebook fica em torno de R$126 para 10 marmitas (valores médios estimados — variam por região), o que dá algo próximo de R$9 a R$13 por refeição completa.</p>
+    </details>
+    <details>
+      <summary>Como recebo o ebook?</summary>
+      <p>O acesso é imediato após a confirmação do pagamento: você recebe o PDF por e-mail e na área de membros da plataforma. Dá para ler no celular, no computador ou imprimir.</p>
+    </details>
+    <details>
+      <summary>E se eu não gostar?</summary>
+      <p>Você tem 7 dias de garantia incondicional. Basta solicitar o reembolso pela própria plataforma e devolvemos 100% do valor.</p>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <p><b>Marmitas Congeladas da Semana</b> — material informativo e educacional.<br>
+  Valores apresentados são estimativas médias sujeitas a variação regional.<br>
+  Este produto não substitui orientação nutricional individualizada.</p>
+</footer>
+
+<!-- ============ BARRA FIXA MOBILE ============ -->
+<div class="barra-fixa">
+  <div class="p">R$ 19,90<small>pagamento único</small></div>
+  <a class="btn" href="#oferta">Quero o ebook</a>
+</div>
+
+<script>
+// ===== Motor gerador de receitas (fórmula do ebook) =====
+const DIAS = 22;
+const fmt  = v => 'R$ ' + Math.round(v).toLocaleString('pt-BR');
+const fmtC = v => 'R$ ' + v.toFixed(2).replace('.', ',');
+
+// Componentes com custo estimado por porção (R$) e tags de preferência
+const PROTEINAS = [
+  {n:"Omelete de forno com legumes", c:1.80, t:["ovos","vegetariano"]},
+  {n:"Lentilha refogada", c:1.20, t:["vegetariano"]},
+  {n:"Grão-de-bico ao curry simples", c:2.20, t:["vegetariano"]},
+  {n:"Frango desfiado ao molho", c:2.80, t:["frango"]},
+  {n:"Frango grelhado em tiras", c:3.20, t:["frango"]},
+  {n:"Frango ao molho de mostarda", c:3.60, t:["frango"]},
+  {n:"Strogonoff de frango", c:4.20, t:["frango"]},
+  {n:"Carne moída com legumes", c:4.00, t:["carne"]},
+  {n:"Almôndegas ao sugo", c:4.00, t:["carne","massas"]},
+  {n:"Carne de panela desfiada", c:5.50, t:["carne"]},
+  {n:"Tirinhas de carne aceboladas", c:5.80, t:["carne"]},
+];
+const CARBOS = [
+  {n:"arroz soltinho", c:0.80, t:[]},
+  {n:"arroz colorido com cenoura", c:1.00, t:[]},
+  {n:"macarrão al dente", c:0.90, t:["massas"]},
+  {n:"batata-doce assada", c:1.20, t:["raizes"]},
+  {n:"mandioca cozida", c:1.50, t:["raizes"]},
+  {n:"purê de mandioquinha", c:2.00, t:["raizes"]},
+];
+const LEGUMINOSAS = [
+  {n:"feijão", c:1.00, t:[]},
+  {n:"lentilha", c:1.10, t:["vegetariano"]},
+  {n:"grão-de-bico", c:1.60, t:["vegetariano"]},
+];
+const LEGUMES = [
+  {n:"couve refogada", c:0.90, t:[]},
+  {n:"cenoura e vagem na manteiga", c:1.20, t:[]},
+  {n:"abobrinha e berinjela grelhadas", c:1.30, t:[]},
+  {n:"brócolis e couve-flor no vapor", c:1.50, t:[]},
+  {n:"legumes assados com alecrim", c:1.40, t:["raizes"]},
+];
+const CARNES = ["frango","carne"];
+const MIN_MARMITA = 1.20 + 0.80 + 1.00 + 0.90; // combinação mais barata possível
+
+// chips
+document.querySelectorAll('#gostos .chip').forEach(ch => {
+  ch.addEventListener('click', () => {
+    ch.setAttribute('aria-pressed', ch.getAttribute('aria-pressed') !== 'true');
+  });
+});
+
+// sliders
+const gasto = document.getElementById('gasto');
+const orcamento = document.getElementById('orcamento');
+gasto.addEventListener('input', () => document.getElementById('valorDia').textContent = fmt(gasto.value));
+orcamento.addEventListener('input', () => document.getElementById('valorOrc').textContent = fmt(orcamento.value));
+
+// pontua um componente pelas preferências (+ ruído pra variar a cada geração)
+const score = (item, tags) => item.t.filter(t => tags.includes(t)).length * 2 + Math.random();
+
+// escolhe o melhor componente que caiba no restante do orçamento,
+// com penalidade cumulativa por repetição na mesma semana
+function escolher(lista, tags, resto, usos){
+  const cabem = lista.filter(i => i.c <= resto);
+  const pool = (cabem.length ? cabem : [lista.reduce((a,b) => a.c < b.c ? a : b)]);
+  const pen = i => 2.5 * (usos.get(i.n) || 0);
+  const ordenado = [...pool].sort((a,b) => (score(b,tags) - pen(b)) - (score(a,tags) - pen(a)));
+  return ordenado[0];
+}
+
+function gerarPlano(){
+  const tags = [...document.querySelectorAll('#gostos .chip[aria-pressed="true"]')].map(c => c.dataset.tag);
+  const soVeg = tags.includes('vegetariano') && !tags.some(t => CARNES.includes(t));
+  const orc = parseInt(orcamento.value, 10);
+  const teto = orc / DIAS; // orçamento por marmita
+  const atual = parseInt(gasto.value, 10) * DIAS;
+
+  let proteinas = soVeg ? PROTEINAS.filter(p => !p.t.some(t => CARNES.includes(t))) : PROTEINAS;
+
+  const usos = new Map();
+  const marca = i => usos.set(i.n, (usos.get(i.n) || 0) + 1);
+  const semana = [];
+  for (let d = 0; d < 5; d++){
+    const alvo = Math.max(teto, MIN_MARMITA); // nunca abaixo do mínimo físico
+    // proteína: a mais bem pontuada que deixe espaço pro resto (mín. 2,70 dos outros 3)
+    const prot = escolher(proteinas, tags, alvo - 2.70, usos);
+    let resto = alvo - prot.c;
+    const carb = escolher(CARBOS, tags, resto - 1.90, usos);
+    resto -= carb.c;
+    // evita "lentilha + lentilha" / "grão-de-bico + grão-de-bico"
+    const legOpcoes = LEGUMINOSAS.filter(l => !prot.n.toLowerCase().includes(l.n.split(' ')[0].toLowerCase()));
+    const leg  = escolher(legOpcoes, tags, resto - 0.90, usos);
+    resto -= leg.c;
+    const veg  = escolher(LEGUMES, tags, resto, usos);
+    [prot, carb, leg, veg].forEach(marca);
+    const custo = prot.c + carb.c + leg.c + veg.c;
+    semana.push({
+      nome: `${prot.n} + ${carb.n}, ${leg.n} e ${veg.n}`,
+      custo
+    });
+  }
+
+  // render
+  const ul = document.getElementById('cardapio');
+  ul.innerHTML = '';
+  const DIAS_SEMANA = ["SEG","TER","QUA","QUI","SEX"];
+  semana.forEach((m,i) => {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="d">${DIAS_SEMANA[i]}</span><span>${m.nome}</span><span class="c">${fmtC(m.custo)}</span>`;
+    ul.appendChild(li);
+  });
+
+  const media = semana.reduce((s,m) => s + m.custo, 0) / 5;
+
+  // Notas de adaptação pró-freezer (mostram o método por trás das escolhas)
+  const notas = [];
+  if (tags.includes('ovos'))
+    notas.push("Você marcou <b>ovos</b>: entram como <b>omelete de forno</b> — ovo cozido inteiro fica borrachudo no freezer, omelete congela perfeitamente.");
+  if (tags.includes('massas') || semana.some(m => m.nome.includes('macarrão')))
+    notas.push("Todo macarrão vai <b>al dente</b> (2 min a menos que o pacote): ele termina de cozinhar no micro-ondas, sem virar papa.");
+  if (tags.includes('raizes') || semana.some(m => /mandioc|batata-doce/.test(m.nome)))
+    notas.push("Usamos <b>mandioca, mandioquinha e batata-doce</b> no lugar da batata inglesa, que vira farinha quando congela.");
+  if (semana.some(m => /Strogonoff|mostarda/.test(m.nome)))
+    notas.push("Pratos cremosos (strogonoff, molho de mostarda): o creme entra <b>com o fogo desligado</b> e volta ao ponto mexendo no reaquecimento.");
+  if (semana.some(m => /grelhad/.test(m.nome)))
+    notas.push("Abobrinha e berinjela vão <b>grelhadas, nunca cozidas</b> — assim não soltam água no descongelamento.");
+  notas.push("Folhas cruas (salada) não congelam: no método, elas vão num potinho à parte, montado no dia.");
+  const nf = document.getElementById('notasFreezer');
+  document.getElementById('notasLista').innerHTML = notas.map(n => `<li>${n}</li>`).join('');
+  nf.style.display = 'block';
+  const mensal = media * DIAS;
+  const economiaAno = Math.max(0, (atual - mensal) * 12);
+
+  document.getElementById('pmMarmita').textContent = fmtC(media);
+  document.getElementById('pmMes').textContent = fmt(mensal);
+  document.getElementById('pmAno').textContent = fmt(economiaAno);
+
+  const badge = document.getElementById('badgeOrc');
+  if (orc < MIN_MARMITA * DIAS){
+    badge.className = 'badge-orc apertado';
+    badge.textContent = `Com ${fmt(orc)}/mês fica difícil fechar a semana — o mínimo realista é ${fmt(MIN_MARMITA*DIAS)}. Montamos a semana mais econômica possível:`;
+  } else if (mensal <= orc){
+    badge.className = 'badge-orc ok';
+    badge.textContent = `✓ Cabe no seu orçamento de ${fmt(orc)} — sobram ${fmt(orc - mensal)} no mês`;
+  } else {
+    badge.className = 'badge-orc apertado';
+    badge.textContent = `Fica ${fmt(mensal - orc)} acima do orçamento — gere outra combinação ou veja a semana econômica do ebook`;
+  }
+
+  const res = document.getElementById('resultado');
+  res.classList.add('on');
+  return res;
+}
+
+document.getElementById('gerar').addEventListener('click', () => {
+  gerarPlano().scrollIntoView({behavior:'smooth', block:'nearest'});
+});
+document.getElementById('regerar').addEventListener('click', () => { gerarPlano(); });
+</script>
+</body>
+</html>

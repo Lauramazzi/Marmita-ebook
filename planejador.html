@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planejador Inteligente — Marmitas Congeladas da Semana</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--verde:#1E5128;--verde-vivo:#2E7D32;--laranja:#F57C00;--laranja-esc:#D96A00;--creme:#FBF6EE;--escuro:#22302A}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Karla',sans-serif;background:var(--creme);color:var(--escuro);line-height:1.55;font-size:16px}
+h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:0 18px}
+header{background:linear-gradient(150deg,var(--verde),var(--verde-vivo));color:#fff;padding:30px 0 26px}
+header .tag{display:inline-block;background:var(--laranja);border-radius:999px;padding:4px 12px;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+header h1{font-size:clamp(1.5rem,4.5vw,2.1rem);font-weight:800;line-height:1.15}
+header p{color:#DFF0DF;font-size:.95rem;margin-top:6px}
+.painel{background:#fff;border:1.5px solid #E3DDD0;border-radius:18px;padding:22px;margin:18px 0}
+.passo{font-family:'Bricolage Grotesque';font-weight:800;font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:var(--laranja);margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{background:var(--creme);border:1.5px solid #E3DDD0;color:var(--escuro);border-radius:999px;padding:9px 16px;font-family:'Karla';font-weight:700;font-size:.92rem;cursor:pointer;transition:all .12s}
+.chip[aria-pressed="true"]{background:var(--verde-vivo);border-color:var(--verde-vivo);color:#fff}
+.chip.laranja[aria-pressed="true"]{background:var(--laranja);border-color:var(--laranja)}
+.chip:focus-visible{outline:3px solid var(--laranja);outline-offset:2px}
+.duas{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+output{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.7rem;color:var(--verde);display:block;margin:4px 0 2px}
+input[type=range]{width:100%;accent-color:var(--laranja);height:32px;cursor:pointer}
+.btn{display:block;width:100%;background:var(--laranja);color:#fff;font-family:'Bricolage Grotesque';font-weight:800;font-size:1.08rem;padding:16px;border:none;border-radius:14px;cursor:pointer;box-shadow:0 5px 0 var(--laranja-esc);margin-top:6px}
+.btn:hover{transform:translateY(2px);box-shadow:0 3px 0 var(--laranja-esc)}
+.btn.sec{background:#fff;color:var(--verde);border:1.5px solid #CBD9CB;box-shadow:none;font-size:.95rem;padding:12px}
+.res{display:none}
+.res.on{display:block;animation:sobe .3s ease}
+@keyframes sobe{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.prato{padding:14px 0;border-bottom:1.5px dashed #E3DDD0}
+.prato:last-child{border-bottom:none}
+.prato .topo{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.prato .d{font-family:'Bricolage Grotesque';font-weight:800;color:var(--laranja);font-size:.85rem;flex:0 0 40px}
+.prato .n{font-weight:700;flex:1;min-width:200px}
+.prato .c{font-weight:700;color:var(--verde);white-space:nowrap;font-size:.9rem}
+.prato .cui{font-size:.72rem;background:#EDF6ED;color:var(--verde);border-radius:999px;padding:2px 10px;font-weight:700}
+.prato .tec{font-size:.86rem;color:#5B6B5B;margin-top:5px;padding-left:50px}
+.prato .tec b{color:var(--laranja-esc)}
+.metricas{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.pm{background:var(--creme);border-radius:12px;padding:12px;text-align:center}
+.pm .r{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:#6B7A6B;font-weight:700}
+.pm .v{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.3rem;color:var(--verde)}
+.setor{margin-top:16px}
+.setor h3{font-size:1rem;color:var(--verde);border-bottom:2px solid var(--laranja);display:inline-block;padding-bottom:2px;margin-bottom:8px}
+.setor table{width:100%;border-collapse:collapse}
+.setor td{padding:7px 4px;border-bottom:1px dashed #EDE7DA;font-size:.93rem}
+.setor td:nth-child(2){text-align:center;white-space:nowrap;color:#5B6B5B}
+.setor td:last-child{text-align:right;font-weight:700;color:var(--verde);white-space:nowrap}
+.total{display:flex;justify-content:space-between;align-items:baseline;background:var(--escuro);color:#fff;border-radius:12px;padding:14px 18px;margin-top:16px}
+.total .v{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.5rem;color:#FFD08A}
+.avisos{margin-top:14px;background:#F3F8F3;border-left:4px solid var(--verde-vivo);border-radius:0 10px 10px 0;padding:12px 14px}
+.avisos .t{font-family:'Bricolage Grotesque';font-weight:800;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--verde);margin-bottom:5px}
+.avisos li{margin:4px 0 4px 18px;font-size:.86rem;color:#4C594C}
+.mini{font-size:.8rem;color:#8A9A8A;margin-top:10px}
+footer{text-align:center;color:#8A9A8A;font-size:.78rem;padding:24px 18px 40px}
+@media(max-width:640px){.duas{grid-template-columns:1fr}.metricas{grid-template-columns:1fr 1fr}.pm:last-child{grid-column:1/-1}.prato .tec{padding-left:0}}
+@media print{
+  header,.painel.controles,.btn,footer,.mini{display:none!important}
+  body{background:#fff}
+  .painel{border:none;padding:6px 0;margin:0}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="tag">Área exclusiva do comprador</span>
+    <h1>Planejador Inteligente de Marmitas</h1>
+    <p>Monte a sua semana do seu jeito: escolha os dias, os gostos e as restrições — a lista de compras sai calculada só com o que você vai cozinhar.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<div class="painel controles">
+  <div class="passo">1 · Em quais dias você quer marmita?</div>
+  <div class="chips" id="dias">
+    <button class="chip" data-d="SEG" aria-pressed="true">Segunda</button>
+    <button class="chip" data-d="TER" aria-pressed="true">Terça</button>
+    <button class="chip" data-d="QUA" aria-pressed="true">Quarta</button>
+    <button class="chip" data-d="QUI" aria-pressed="true">Quinta</button>
+    <button class="chip" data-d="SEX" aria-pressed="true">Sexta</button>
+  </div>
+
+  <div class="passo" style="margin-top:18px">2 · Quantas refeições por dia?</div>
+  <div class="chips" id="refeicoes">
+    <button class="chip laranja" data-r="1" aria-pressed="true">Só almoço (1)</button>
+    <button class="chip laranja" data-r="2" aria-pressed="false">Almoço + janta (2)</button>
+  </div>
+
+  <div class="passo" style="margin-top:18px">3 · O que você gosta de comer?</div>
+  <div class="chips" id="gostos">
+    <button class="chip" data-tag="frango" aria-pressed="true">🍗 Frango</button>
+    <button class="chip" data-tag="carne" aria-pressed="true">🥩 Carne</button>
+    <button class="chip" data-tag="ovos" aria-pressed="false">🍳 Ovos</button>
+    <button class="chip" data-tag="massas" aria-pressed="false">🍝 Massas</button>
+    <button class="chip" data-tag="raizes" aria-pressed="false">🍠 Raízes</button>
+    <button class="chip" data-tag="mundo" aria-pressed="false">🌍 Sabores do mundo</button>
+  </div>
+
+  <div class="passo" style="margin-top:18px">4 · Alguma restrição alimentar?</div>
+  <div class="chips" id="restricoes">
+    <button class="chip laranja" data-res="veg" aria-pressed="false">Não como carne</button>
+    <button class="chip laranja" data-res="lac" aria-pressed="false">Sem lactose</button>
+    <button class="chip laranja" data-res="glu" aria-pressed="false">Sem glúten</button>
+  </div>
+
+  <div class="duas" style="margin-top:18px">
+    <div>
+      <div class="passo">5 · Orçamento pra semana (mercado)</div>
+      <output id="valorOrc">R$ 60</output>
+      <input type="range" id="orcamento" min="25" max="150" step="5" value="60">
+    </div>
+    <div>
+      <div class="passo">Quanto gasta hoje por almoço na rua?</div>
+      <output id="valorDia">R$ 25</output>
+      <input type="range" id="gasto" min="15" max="60" step="1" value="25">
+    </div>
+  </div>
+
+  <button class="btn" id="gerar">GERAR MINHA SEMANA + LISTA DE COMPRAS</button>
+</div>
+
+<div class="painel res" id="resCardapio">
+  <div class="passo">Seu cardápio da semana</div>
+  <div id="pratos"></div>
+  <div class="metricas">
+    <div class="pm"><div class="r">Marmitas</div><div class="v" id="mMarmitas">—</div></div>
+    <div class="pm"><div class="r">Custo por marmita</div><div class="v" id="mCusto">—</div></div>
+    <div class="pm"><div class="r">Economia na semana</div><div class="v" id="mEco">—</div></div>
+  </div>
+  <div class="avisos" id="avisos" style="display:none">
+    <div class="t">🧊 Adaptações inteligentes</div>
+    <ul id="avisosLista"></ul>
+  </div>
+  <button class="btn sec" id="regerar" style="margin-top:14px">↻ Gerar outra combinação</button>
+</div>
+
+<div class="painel res" id="resLista">
+  <div class="passo">Lista de compras — só o que você vai cozinhar</div>
+  <div id="lista"></div>
+  <div class="total"><span>Total estimado no mercado</span><span class="v" id="totalLista">—</span></div>
+  <p class="mini">Preços médios de referência — variam por região e época. Despensa básica (sal, óleo, alho, temperos secos): confira o que você já tem antes de comprar.</p>
+  <button class="btn sec" onclick="window.print()">🖨️ Imprimir / salvar em PDF</button>
+</div>
+
+</div>
+
+<footer>Planejador Inteligente · complemento do ebook <b>Marmitas Congeladas da Semana</b><br>Todas as receitas e componentes são testados e aprovados para congelamento.</footer>
+
+<script>
+/* =====================================================================
+   TABELA DE PREÇOS — edite aqui e TODO o planejador recalcula sozinho.
+   u: unidade de venda | p: preço médio (R$) | s: setor do mercado
+===================================================================== */
+const PRECOS = {
+  frango:{n:"Coxa/sobrecoxa de frango", u:"kg", p:12.0, s:"Açougue"},
+  moida:{n:"Carne moída", u:"kg", p:32.0, s:"Açougue"},
+  acem:{n:"Acém ou músculo", u:"kg", p:30.0, s:"Açougue"},
+  ovo:{n:"Ovos", u:"un", p:1.00, s:"Mercearia"},
+  lentilha:{n:"Lentilha", u:"kg", p:12.0, s:"Mercearia"},
+  grao:{n:"Grão-de-bico", u:"kg", p:16.0, s:"Mercearia"},
+  arroz:{n:"Arroz", u:"kg", p:6.0, s:"Mercearia"},
+  feijao:{n:"Feijão", u:"kg", p:8.0, s:"Mercearia"},
+  macarrao:{n:"Macarrão", u:"kg", p:9.0, s:"Mercearia"},
+  cuscuz:{n:"Flocão de milho (cuscuz)", u:"kg", p:7.0, s:"Mercearia"},
+  molho:{n:"Molho de tomate (sachê)", u:"un", p:3.5, s:"Mercearia"},
+  extrato:{n:"Extrato de tomate", u:"un", p:4.0, s:"Mercearia"},
+  creme:{n:"Creme de leite", u:"un", p:4.0, s:"Mercearia"},
+  coco:{n:"Leite de coco", u:"un", p:6.0, s:"Mercearia"},
+  shoyu:{n:"Shoyu", u:"un", p:8.0, s:"Mercearia"},
+  mandioca:{n:"Mandioca", u:"kg", p:8.0, s:"Hortifruti"},
+  bdoce:{n:"Batata-doce", u:"kg", p:6.0, s:"Hortifruti"},
+  mandioquinha:{n:"Mandioquinha", u:"kg", p:14.0, s:"Hortifruti"},
+  cenoura:{n:"Cenoura", u:"kg", p:5.0, s:"Hortifruti"},
+  vagem:{n:"Vagem", u:"kg", p:12.0, s:"Hortifruti"},
+  brocolis:{n:"Brócolis", u:"un", p:7.0, s:"Hortifruti"},
+  cflor:{n:"Couve-flor", u:"un", p:8.0, s:"Hortifruti"},
+  abobrinha:{n:"Abobrinha", u:"kg", p:6.0, s:"Hortifruti"},
+  berinjela:{n:"Berinjela", u:"kg", p:7.0, s:"Hortifruti"},
+  couve:{n:"Couve (maço)", u:"un", p:4.0, s:"Hortifruti"},
+  pimentao:{n:"Pimentão", u:"kg", p:9.0, s:"Hortifruti"},
+  cebola:{n:"Cebola", u:"kg", p:5.0, s:"Hortifruti"},
+  tomate:{n:"Tomate", u:"kg", p:8.0, s:"Hortifruti"},
+};
+
+/* Componentes: ing = [chave, quantidade por porção] (kg ou unidade).
+   tags = preferências | lac/glu = exclui na restrição | adaptGlu/adaptLac = mantém com adaptação
+   tec = técnica de preparo simples | cui = culinária */
+const PROTEINAS = [
+  {n:"Omelete de forno com legumes", t:["ovos"], veg:1,
+   ing:[["ovo",1.6],["cenoura",.04],["cebola",.02]],
+   tec:"Bata os ovos, misture os legumes e <b>asse a 180 °C por 25 min</b> — sem frigideira, sem virar nada."},
+  {n:"Lentilha refogada", t:[], veg:1,
+   ing:[["lentilha",.06],["cenoura",.03],["cebola",.02],["tomate",.03]],
+   tec:"Cozinhe 20 min em água (sem pressão) e <b>refogue no fim</b> com cebola e alho."},
+  {n:"Grão-de-bico ao curry", t:["mundo"], veg:1, cui:"🇮🇳 Indiana",
+   ing:[["grao",.07],["coco",.12],["tomate",.05],["cebola",.02]],
+   tec:"Grão na pressão por 25 min; refogue com curry e finalize no <b>leite de coco</b> (naturalmente sem lactose)."},
+  {n:"Frango desfiado ao molho", t:["frango"],
+   ing:[["frango",.16],["molho",.2],["cebola",.02]],
+   tec:"Pressão por 20 min e <b>desfie com dois garfos</b> — o corte já sai macio, impossível errar."},
+  {n:"Frango grelhado em tiras", t:["frango"],
+   ing:[["frango",.18],["cebola",.01]],
+   tec:"Frigideira <b>bem quente e sem mexer toda hora</b>: é isso que doura em vez de cozinhar."},
+  {n:"Frango ao molho de mostarda", t:["frango"], lac:1,
+   ing:[["frango",.16],["creme",.2],["cebola",.02]],
+   tec:"Doure o frango, junte mostarda e água; <b>creme de leite só com o fogo desligado</b>."},
+  {n:"Strogonoff de frango", t:["frango"], lac:1,
+   ing:[["frango",.16],["creme",.25],["extrato",.15],["cebola",.02]],
+   tec:"Extrato + mostarda + 1/2 xíc. de água por 10 min; <b>creme por último, fogo apagado</b>."},
+  {n:"Frango xadrez simples", t:["frango","mundo"], cui:"🇨🇳 Chinesa", adaptGlu:"use shoyu sem glúten (tamari) ou substitua por limão + gengibre",
+   ing:[["frango",.15],["pimentao",.05],["cebola",.03],["shoyu",.06]],
+   tec:"Fogo alto o tempo todo, mexendo: <b>salteado rápido</b>, legumes ainda crocantes."},
+  {n:"Carne moída com legumes", t:["carne"],
+   ing:[["moida",.10],["cenoura",.03],["abobrinha",.04],["cebola",.02],["extrato",.1]],
+   tec:"<b>Doure a carne sem mexer demais</b> (mexer solta água e cozinha em vez de fritar)."},
+  {n:"Almôndegas ao sugo", t:["carne","massas"], cui:"🇮🇹 Italiana", adaptGlu:"troque a farinha de rosca por polvilho ou aveia sem glúten",
+   ing:[["moida",.10],["ovo",.2],["molho",.3]],
+   tec:"Bolinhas douradas na frigideira e <b>terminadas dentro do molho</b> por 15 min — nunca ressecam."},
+  {n:"Carne de panela desfiada", t:["carne"],
+   ing:[["acem",.16],["cebola",.03],["tomate",.05]],
+   tec:"<b>Doure bem antes de cobrir com água</b> — é o dourado que dá o sabor. Pressão: 40 min."},
+  {n:"Tirinhas de carne aceboladas", t:["carne"],
+   ing:[["acem",.17],["cebola",.05]],
+   tec:"Tiras finas, frigideira quente, <b>em levas pequenas</b> pra não juntar água."},
+];
+const CARBOS = [
+  {n:"arroz soltinho", t:[], ing:[["arroz",.09],["cebola",.01]],
+   tec:"2 medidas de água quente pra 1 de arroz, fogo baixo, panela semitampada."},
+  {n:"arroz colorido com cenoura", t:[], ing:[["arroz",.09],["cenoura",.03]]},
+  {n:"macarrão al dente", t:["massas"], glu:1, ing:[["macarrao",.10]],
+   tec:"<b>2 min a menos</b> que o pacote: ele termina de cozinhar no micro-ondas."},
+  {n:"cuscuz nordestino", t:["mundo","raizes"], cui:"🇧🇷 Nordestina", ing:[["cuscuz",.10]],
+   tec:"Hidrate o flocão com água e sal por 10 min e <b>cozinhe no vapor por 5</b> — cuscuzeira ou peneira sobre a panela."},
+  {n:"batata-doce assada", t:["raizes"], ing:[["bdoce",.16]],
+   tec:"Cubos + azeite + sal, forno 200 °C por 30 min. <b>Assa sozinha</b> enquanto você usa o fogão."},
+  {n:"mandioca cozida", t:["raizes"], ing:[["mandioca",.15]]},
+  {n:"purê de mandioquinha", t:["raizes"], adaptLac:"faça com azeite e o caldo do cozimento no lugar da manteiga",
+   ing:[["mandioquinha",.15]],
+   tec:"Amasse <b>ainda quente</b> — frio, empelota."},
+];
+const LEGUMINOSAS = [
+  {n:"feijão", ing:[["feijao",.07],["cebola",.01]]},
+  {n:"lentilha", ing:[["lentilha",.06]]},
+  {n:"grão-de-bico", ing:[["grao",.07]]},
+];
+const LEGUMES = [
+  {n:"couve refogada", ing:[["couve",.25]],
+   tec:"Tiras finas, <b>30 segundos na panela</b> — mais que isso, murcha."},
+  {n:"cenoura e vagem", ing:[["cenoura",.05],["vagem",.06]]},
+  {n:"abobrinha e berinjela grelhadas", ing:[["abobrinha",.08],["berinjela",.08]],
+   tec:"<b>Grelhadas, nunca cozidas</b>: assim não soltam água no descongelamento."},
+  {n:"brócolis e couve-flor branqueados", ing:[["brocolis",.12],["cflor",.08]],
+   tec:"2 min na água fervente + <b>choque no gelo</b>: trava cor e textura pro freezer."},
+  {n:"legumes assados", ing:[["cenoura",.05],["abobrinha",.05],["cebola",.03]]},
+];
+
+const custoDe = item => item.ing.reduce((s,[k,q]) => s + PRECOS[k].p * q, 0);
+const fmtC = v => 'R$ ' + v.toFixed(2).replace('.', ',');
+const fmt = v => 'R$ ' + Math.round(v).toLocaleString('pt-BR');
+
+// interações
+document.querySelectorAll('.chip').forEach(ch => ch.addEventListener('click', () => {
+  if (ch.closest('#refeicoes')){ // grupo exclusivo
+    ch.closest('#refeicoes').querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed','false'));
+    ch.setAttribute('aria-pressed','true');
+  } else {
+    ch.setAttribute('aria-pressed', ch.getAttribute('aria-pressed') !== 'true');
+  }
+}));
+const orcamento = document.getElementById('orcamento'), gasto = document.getElementById('gasto');
+orcamento.addEventListener('input', () => document.getElementById('valorOrc').textContent = fmt(orcamento.value));
+gasto.addEventListener('input', () => document.getElementById('valorDia').textContent = fmt(gasto.value));
+
+function filtrar(lista, res){
+  return lista.filter(i => {
+    if (res.has('veg') && !i.veg && (i.t?.includes('frango') || i.t?.includes('carne') || ["moida","acem","frango"].some(k => i.ing.some(g => g[0]===k)))) return false;
+    if (res.has('lac') && i.lac) return false;
+    if (res.has('glu') && i.glu) return false;
+    return true;
+  });
+}
+const score = (i, tags) => (i.t||[]).filter(t => tags.includes(t)).length * 2 + Math.random();
+function escolher(lista, tags, resto, usos){
+  const cabem = lista.filter(i => custoDe(i) <= resto);
+  const pool = cabem.length ? cabem : [lista.reduce((a,b) => custoDe(a) < custoDe(b) ? a : b)];
+  const pen = i => 2.5 * (usos.get(i.n) || 0);
+  return [...pool].sort((a,b) => (score(b,tags)-pen(b)) - (score(a,tags)-pen(a)))[0];
+}
+
+function gerar(){
+  const dias = [...document.querySelectorAll('#dias .chip[aria-pressed="true"]')].map(c => c.dataset.d);
+  if (!dias.length){ alert('Escolha pelo menos um dia da semana.'); return; }
+  const ref = parseInt(document.querySelector('#refeicoes .chip[aria-pressed="true"]').dataset.r, 10);
+  const tags = [...document.querySelectorAll('#gostos .chip[aria-pressed="true"]')].map(c => c.dataset.tag);
+  const res = new Set([...document.querySelectorAll('#restricoes .chip[aria-pressed="true"]')].map(c => c.dataset.res));
+  const orc = parseInt(orcamento.value,10);
+  const marmitas = dias.length * ref;
+  const teto = orc / marmitas;
+
+  const P = filtrar(PROTEINAS,res), C = filtrar(CARBOS,res), L = filtrar(LEGUMINOSAS,res), V = filtrar(LEGUMES,res);
+  const MIN = Math.min(...P.map(custoDe)) + Math.min(...C.map(custoDe)) + Math.min(...L.map(custoDe)) + Math.min(...V.map(custoDe));
+
+  const usos = new Map(); const marca = i => usos.set(i.n,(usos.get(i.n)||0)+1);
+  const semana = []; const compras = {}; const avisos = new Set();
+
+  dias.forEach(d => {
+    const alvo = Math.max(teto, MIN);
+    const minC = Math.min(...C.map(custoDe)), minL = Math.min(...L.map(custoDe)), minV = Math.min(...V.map(custoDe));
+    const prot = escolher(P, tags, alvo - (minC+minL+minV), usos);
+    let resto = alvo - custoDe(prot);
+    const carb = escolher(C, tags, resto - (minL+minV), usos);
+    resto -= custoDe(carb);
+    const legOp = L.filter(l => !prot.n.toLowerCase().includes(l.n.split(' ')[0].toLowerCase()));
+    const leg = escolher(legOp, tags, resto - minV, usos);
+    resto -= custoDe(leg);
+    const veg = escolher(V, tags, resto, usos);
+    [prot,carb,leg,veg].forEach(marca);
+
+    const comps = [prot,carb,leg,veg];
+    const custo = comps.reduce((s,i) => s + custoDe(i), 0);
+    // compras: quantidade × porções do dia
+    comps.forEach(i => i.ing.forEach(([k,q]) => compras[k] = (compras[k]||0) + q*ref));
+    // avisos de adaptação
+    comps.forEach(i => {
+      if (res.has('glu') && i.adaptGlu) avisos.add(`<b>${i.n}:</b> ${i.adaptGlu}.`);
+      if (res.has('lac') && i.adaptLac) avisos.add(`<b>${i.n}:</b> ${i.adaptLac}.`);
+    });
+    semana.push({d, comps, custo, tec: comps.filter(i=>i.tec).map(i=>i.tec), cui: comps.map(i=>i.cui).find(Boolean)});
+  });
+
+  if (res.has('lac')) avisos.add("Modo <b>sem lactose</b>: pratos com creme de leite foram substituídos automaticamente.");
+  if (res.has('glu')) avisos.add("Modo <b>sem glúten</b>: massas de trigo saíram do plano — cuscuz de milho e raízes entraram no lugar.");
+  if (tags.includes('ovos') && !res.has('veg')) avisos.add("Ovos entram como <b>omelete de forno</b> — ovo cozido inteiro não congela bem.");
+  avisos.add("Folhas cruas (salada) não congelam: leve num potinho à parte, montado no dia.");
+
+  // render cardápio
+  const pr = document.getElementById('pratos'); pr.innerHTML = '';
+  semana.forEach(m => {
+    const nome = `${m.comps[0].n} + ${m.comps[1].n}, ${m.comps[2].n} e ${m.comps[3].n}`;
+    const div = document.createElement('div'); div.className = 'prato';
+    div.innerHTML = `<div class="topo"><span class="d">${m.d}</span><span class="n">${nome}${ref===2?' <small>(almoço + janta)</small>':''}</span>${m.cui?`<span class="cui">${m.cui}</span>`:''}<span class="c">${fmtC(m.custo)}/marmita</span></div>` +
+      (m.tec.length ? `<div class="tec">👩‍🍳 ${m.tec[0]}</div>` : '');
+    pr.appendChild(div);
+  });
+
+  const custoTotal = semana.reduce((s,m) => s + m.custo*ref, 0);
+  document.getElementById('mMarmitas').textContent = marmitas;
+  document.getElementById('mCusto').textContent = fmtC(custoTotal/marmitas);
+  const ecoSemana = Math.max(0, parseInt(gasto.value,10)*dias.length - (ref===1 ? custoTotal : custoTotal/2));
+  document.getElementById('mEco').textContent = fmt(ecoSemana);
+
+  const av = document.getElementById('avisos');
+  document.getElementById('avisosLista').innerHTML = [...avisos].map(a => `<li>${a}</li>`).join('');
+  av.style.display = avisos.size ? 'block' : 'none';
+
+  // render lista de compras por setor
+  const setores = {};
+  let total = 0;
+  Object.entries(compras).forEach(([k,q]) => {
+    const p = PRECOS[k];
+    let qtd, custo;
+    if (p.u === 'kg'){ qtd = Math.ceil(q*10)/10; custo = qtd*p.p; }
+    else { qtd = Math.ceil(q); custo = qtd*p.p; }
+    total += custo;
+    (setores[p.s] = setores[p.s] || []).push({n:p.n, qtd: p.u==='kg' ? qtd.toFixed(1).replace('.',',')+' kg' : qtd+' un', custo});
+  });
+  const ordem = ["Açougue","Hortifruti","Mercearia"];
+  const li = document.getElementById('lista'); li.innerHTML = '';
+  ordem.filter(s => setores[s]).forEach(s => {
+    const div = document.createElement('div'); div.className = 'setor';
+    div.innerHTML = `<h3>${s}</h3><table>` +
+      setores[s].sort((a,b)=>b.custo-a.custo).map(i => `<tr><td>${i.n}</td><td>${i.qtd}</td><td>${fmtC(i.custo)}</td></tr>`).join('') + `</table>`;
+    li.appendChild(div);
+  });
+  document.getElementById('totalLista').textContent = fmtC(total);
+
+  document.getElementById('resCardapio').classList.add('on');
+  document.getElementById('resLista').classList.add('on');
+}
+document.getElementById('gerar').addEventListener('click', () => { gerar(); document.getElementById('resCardapio').scrollIntoView({behavior:'smooth'}); });
+document.getElementById('regerar').addEventListener('click', gerar);
+</script>
+</body>
+</html>
