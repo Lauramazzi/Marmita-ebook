@@ -50,9 +50,40 @@ input[type=range]{width:100%;accent-color:var(--laranja);height:32px;cursor:poin
 .setor{margin-top:16px}
 .setor h3{font-size:1rem;color:var(--verde);border-bottom:2px solid var(--laranja);display:inline-block;padding-bottom:2px;margin-bottom:8px}
 .setor table{width:100%;border-collapse:collapse}
+.setor tr {
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.setor tr:hover {
+  background: rgba(46, 125, 50, 0.05);
+}
+.setor tr.checked-row {
+  opacity: 0.45;
+  text-decoration: line-through;
+  background: rgba(0,0,0,0.02);
+}
 .setor td{padding:7px 4px;border-bottom:1px dashed #EDE7DA;font-size:.93rem}
 .setor td:nth-child(2){text-align:center;white-space:nowrap;color:#5B6B5B}
 .setor td:last-child{text-align:right;font-weight:700;color:var(--verde);white-space:nowrap}
+.passo-cook {
+  background: #fff;
+  border: 1.5px solid #E3DDD0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 10px;
+}
+.passo-cook:hover {
+  background: rgba(46, 125, 50, 0.03);
+  border-color: var(--verde-vivo);
+}
+.passo-cook.done {
+  background: #EDF6ED !important;
+  border-color: #BBDCBB !important;
+  opacity: 0.6;
+  text-decoration: line-through;
+}
 .total{display:flex;justify-content:space-between;align-items:baseline;background:var(--escuro);color:#fff;border-radius:12px;padding:14px 18px;margin-top:16px}
 .total .v{font-family:'Bricolage Grotesque';font-weight:800;font-size:1.5rem;color:#FFD08A}
 .avisos{margin-top:14px;background:#F3F8F3;border-left:4px solid var(--verde-vivo);border-radius:0 10px 10px 0;padding:12px 14px}
@@ -62,7 +93,7 @@ input[type=range]{width:100%;accent-color:var(--laranja);height:32px;cursor:poin
 footer{text-align:center;color:#8A9A8A;font-size:.78rem;padding:24px 18px 40px}
 @media(max-width:640px){.duas{grid-template-columns:1fr}.metricas{grid-template-columns:1fr 1fr}.pm:last-child{grid-column:1/-1}.prato .tec{padding-left:0}}
 @media print{
-  header,.painel.controles,.btn,footer,.mini{display:none!important}
+  header,.painel.controles,.btn,.btn-grid,#resPreparo,footer,.mini{display:none!important}
   body{background:#fff}
   .painel{border:none;padding:6px 0;margin:0}
 }
@@ -149,7 +180,38 @@ footer{text-align:center;color:#8A9A8A;font-size:.78rem;padding:24px 18px 40px}
   <div id="lista"></div>
   <div class="total"><span>Total estimado no mercado</span><span class="v" id="totalLista">—</span></div>
   <p class="mini">Preços médios de referência — variam por região e época. Despensa básica (sal, óleo, alho, temperos secos): confira o que você já tem antes de comprar.</p>
-  <button class="btn sec" onclick="window.print()">🖨️ Imprimir / salvar em PDF</button>
+  <div class="btn-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; margin-bottom: 10px;">
+    <button class="btn sec" id="btnCopy" style="display: flex; align-items: center; justify-content: center; gap: 6px;">📋 Copiar Lista</button>
+    <button class="btn sec" id="btnWpp" style="display: flex; align-items: center; justify-content: center; gap: 6px; border-color: #25D366; color: #128C7E;">💬 WhatsApp</button>
+  </div>
+  <button class="btn sec" onclick="window.print()" style="width: 100%;">🖨️ Imprimir / salvar em PDF</button>
+</div>
+
+<div class="painel res" id="resPreparo">
+  <div class="passo">Cronograma minuto a minuto — Cozinhe em 2h30</div>
+  <p style="font-size: .92rem; color: #5B6B5B; margin-bottom: 14px;">Um guia prático para otimizar suas panelas e forno. Toque nos passos para marcá-los como concluídos enquanto cozinha.</p>
+  <div class="etapas-preparo" style="display: flex; flex-direction: column; gap: 4px;">
+    <div class="passo-cook">
+      <span style="font-weight: 700; color: var(--laranja); font-size: .8rem; text-transform: uppercase;">00:00 - 00:15 | Preparação</span>
+      <p style="margin-top: 4px; font-size: .92rem; font-weight: 500;">Pique todos os legumes (cenoura, abobrinha, cebola, alho) e coloque a água do arroz e do feijão para esquentar.</p>
+    </div>
+    <div class="passo-cook">
+      <span style="font-weight: 700; color: var(--laranja); font-size: .8rem; text-transform: uppercase;">00:15 - 00:45 | O Forno e Pressão</span>
+      <p style="margin-top: 4px; font-size: .92rem; font-weight: 500;">Tempere o frango/carne e coloque na panela de pressão. Tempere as batatas/raízes e leve ao forno pré-aquecido a 200 °C.</p>
+    </div>
+    <div class="passo-cook">
+      <span style="font-weight: 700; color: var(--laranja); font-size: .8rem; text-transform: uppercase;">00:45 - 01:20 | Grãos e Acompanhamentos</span>
+      <p style="margin-top: 4px; font-size: .92rem; font-weight: 500;">Inicie o cozimento do arroz, feijão e macarrão. Fique de olho no tempo do macarrão (tire 2 min antes do ponto).</p>
+    </div>
+    <div class="passo-cook">
+      <span style="font-weight: 700; color: var(--laranja); font-size: .8rem; text-transform: uppercase;">01:20 - 02:00 | Desfiados e Refogados</span>
+      <p style="margin-top: 4px; font-size: .92rem; font-weight: 500;">Tire o frango da pressão e desfie. Faça os refogados de couve, legumes e os molhos das proteínas.</p>
+    </div>
+    <div class="passo-cook">
+      <span style="font-weight: 700; color: var(--laranja); font-size: .8rem; text-transform: uppercase;">02:00 - 02:30 | Montagem e Resfriamento</span>
+      <p style="margin-top: 4px; font-size: .92rem; font-weight: 500;">Distribua as porções igualmente nos potes. Deixe as marmitas esfriarem sem tampa antes de tampar e congelar.</p>
+    </div>
+  </div>
 </div>
 
 </div>
@@ -386,9 +448,137 @@ function gerar(){
 
   document.getElementById('resCardapio').classList.add('on');
   document.getElementById('resLista').classList.add('on');
+  document.getElementById('resPreparo').classList.add('on');
+  
+  salvarEstado();
 }
 document.getElementById('gerar').addEventListener('click', () => { gerar(); document.getElementById('resCardapio').scrollIntoView({behavior:'smooth'}); });
 document.getElementById('regerar').addEventListener('click', gerar);
+
+// Persistência com LocalStorage
+function salvarEstado() {
+  const dias = [...document.querySelectorAll('#dias .chip[aria-pressed="true"]')].map(c => c.dataset.d);
+  const ref = document.querySelector('#refeicoes .chip[aria-pressed="true"]')?.dataset.r || "1";
+  const gostos = [...document.querySelectorAll('#gostos .chip[aria-pressed="true"]')].map(c => c.dataset.tag);
+  const restricoes = [...document.querySelectorAll('#restricoes .chip[aria-pressed="true"]')].map(c => c.dataset.res);
+  
+  localStorage.setItem('marmita_dias', JSON.stringify(dias));
+  localStorage.setItem('marmita_ref', ref);
+  localStorage.setItem('marmita_gostos', JSON.stringify(gostos));
+  localStorage.setItem('marmita_restricoes', JSON.stringify(restricoes));
+  localStorage.setItem('marmita_orc', orcamento.value);
+  localStorage.setItem('marmita_gasto', gasto.value);
+}
+
+function carregarEstado() {
+  try {
+    const dias = JSON.parse(localStorage.getItem('marmita_dias'));
+    const ref = localStorage.getItem('marmita_ref');
+    const gostos = JSON.parse(localStorage.getItem('marmita_gostos'));
+    const restricoes = JSON.parse(localStorage.getItem('marmita_restricoes'));
+    const orc = localStorage.getItem('marmita_orc');
+    const gst = localStorage.getItem('marmita_gasto');
+    
+    if (dias) {
+      document.querySelectorAll('#dias .chip').forEach(c => {
+        c.setAttribute('aria-pressed', dias.includes(c.dataset.d) ? 'true' : 'false');
+      });
+    }
+    if (ref) {
+      document.querySelectorAll('#refeicoes .chip').forEach(c => {
+        c.setAttribute('aria-pressed', c.dataset.r === ref ? 'true' : 'false');
+      });
+    }
+    if (gostos) {
+      document.querySelectorAll('#gostos .chip').forEach(c => {
+        c.setAttribute('aria-pressed', gostos.includes(c.dataset.tag) ? 'true' : 'false');
+      });
+    }
+    if (restricoes) {
+      document.querySelectorAll('#restricoes .chip').forEach(c => {
+        c.setAttribute('aria-pressed', restricoes.includes(c.dataset.res) ? 'true' : 'false');
+      });
+    }
+    if (orc) {
+      orcamento.value = orc;
+      document.getElementById('valorOrc').textContent = fmt(orc);
+    }
+    if (gst) {
+      gasto.value = gst;
+      document.getElementById('valorDia').textContent = fmt(gst);
+    }
+    
+    if (dias && dias.length > 0) {
+      gerar();
+    }
+  } catch (e) {
+    console.error("Erro ao carregar estado salvo", e);
+  }
+}
+
+// Salvar estado em alterações
+document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', salvarEstado));
+orcamento.addEventListener('input', salvarEstado);
+gasto.addEventListener('input', salvarEstado);
+
+// Checklist interativo na lista de compras
+document.getElementById('lista').addEventListener('click', (e) => {
+  const tr = e.target.closest('tr');
+  if (tr) {
+    tr.classList.toggle('checked-row');
+  }
+});
+
+// Checklist interativo no modo preparo
+document.getElementById('resPreparo').addEventListener('click', (e) => {
+  const step = e.target.closest('.passo-cook');
+  if (step) {
+    step.classList.toggle('done');
+  }
+});
+
+// Copiar lista formatada / Enviar WhatsApp
+function formatarListaTexto() {
+  let texto = "*Minha Lista de Compras — Marmitas Congeladas*\n\n";
+  const setores = document.querySelectorAll('.setor');
+  setores.forEach(setor => {
+    const titulo = setor.querySelector('h3').textContent;
+    texto += `*${titulo.toUpperCase()}*\n`;
+    setor.querySelectorAll('tr').forEach(tr => {
+      const tds = tr.querySelectorAll('td');
+      if (tds.length >= 2) {
+        const item = tds[0].textContent;
+        const qtd = tds[1].textContent;
+        const preco = tds[2] ? tds[2].textContent : '';
+        texto += `- [ ] ${item} (${qtd}) ${preco ? '- ' + preco : ''}\n`;
+      }
+    });
+    texto += "\n";
+  });
+  const totalText = document.getElementById('totalLista').textContent;
+  texto += `*Total estimado no mercado:* ${totalText}`;
+  return texto;
+}
+
+document.getElementById('btnCopy').addEventListener('click', () => {
+  const texto = formatarListaTexto();
+  navigator.clipboard.writeText(texto).then(() => {
+    const btn = document.getElementById('btnCopy');
+    const orig = btn.innerHTML;
+    btn.innerHTML = "✓ Copiado!";
+    setTimeout(() => { btn.innerHTML = orig; }, 1500);
+  }).catch(err => {
+    alert('Erro ao copiar lista.');
+  });
+});
+
+document.getElementById('btnWpp').addEventListener('click', () => {
+  const texto = encodeURIComponent(formatarListaTexto());
+  window.open(`https://api.whatsapp.com/send?text=${texto}`, '_blank');
+});
+
+// Carrega preferências ao abrir a página
+carregarEstado();
 </script>
 </body>
 </html>

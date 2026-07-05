@@ -70,7 +70,49 @@ section{padding:64px 0}
 .calc .grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
 .calc label{font-weight:700;display:block;margin-bottom:14px;color:#D9E4D9}
 .calc output{font-family:'Bricolage Grotesque';font-weight:800;font-size:2.4rem;color:#FFD08A;display:block;margin-bottom:6px}
-input[type=range]{width:100%;accent-color:var(--laranja);height:34px;cursor:pointer}
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255,255,255,.15);
+  outline: none;
+  margin: 12px 0;
+  cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--laranja);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,.3);
+  cursor: pointer;
+  margin-top: 0px;
+  transition: transform .1s ease, background .1s ease;
+}
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background: var(--laranja-esc);
+}
+input[type=range]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--laranja);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,.3);
+  cursor: pointer;
+  transition: transform .1s ease, background .1s ease;
+}
+input[type=range]::-moz-range-thumb:hover {
+  transform: scale(1.15);
+  background: var(--laranja-esc);
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 .calc .resultado{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);border-radius:18px;padding:28px}
 .calc .resultado .linha{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px dashed rgba(255,255,255,.18)}
 .calc .resultado .linha:last-child{border-bottom:none}
@@ -184,6 +226,7 @@ footer{background:var(--escuro);color:#9FB09F;text-align:center;padding:34px 22p
       <h1>Cozinhe <em>uma vez no domingo</em> e resolva o almoço da semana inteira — gastando até R$500 a menos por mês</h1>
       <p class="sub">O método passo a passo para quem trabalha fora: marmitas congeladas organizadas, saborosas e econômicas, sem passar a vida na cozinha.</p>
       <a class="btn" href="#oferta">QUERO ECONOMIZAR NO ALMOÇO<small>Acesso imediato · leia no celular ou imprima</small></a>
+      <div style="font-size: .75rem; color: #CFE6CF; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 6px;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Compra 100% segura · Liberação imediata no Pix</div>
       <div class="mini-provas">
         <span>20 receitas com custo por porção</span>
         <span>Cardápio pronto de 4 semanas</span>
@@ -256,25 +299,52 @@ footer{background:var(--escuro);color:#9FB09F;text-align:center;padding:34px 22p
       </div>
     </div>
 
+    <!-- Comparador Visual de Economia -->
+    <div class="savings-compare" style="margin-top: 24px; background: rgba(255,255,255,.05); border: 1.5px solid rgba(255,255,255,.12); border-radius: 18px; padding: 20px 24px; text-align: center;">
+      <div style="font-size: .82rem; color: #9FB09F; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; margin-bottom: 8px;">Sua Estimativa de Economia</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0;">
+        <div style="border-right: 1px solid rgba(255,255,255,.15); padding-right: 8px;">
+          <div style="font-size: .8rem; color: #CFE6CF;">Economia Mensal</div>
+          <div id="saveMes" style="font-family: 'Bricolage Grotesque'; font-size: 1.8rem; font-weight: 800; color: #FFD08A; margin-top: 2px;">R$ 300</div>
+        </div>
+        <div style="padding-left: 8px;">
+          <div style="font-size: .8rem; color: #CFE6CF;">Economia Anual</div>
+          <div id="saveAno" style="font-family: 'Bricolage Grotesque'; font-size: 1.8rem; font-weight: 800; color: var(--laranja); margin-top: 2px;">R$ 3.600</div>
+        </div>
+      </div>
+      <div style="width: 100%; height: 6px; background: rgba(255,255,255,.1); border-radius: 3px; overflow: hidden; margin-top: 14px;">
+        <div id="saveProgress" style="width: 50%; height: 100%; background: linear-gradient(90deg, #FFD08A, var(--laranja)); border-radius: 3px; transition: width 0.3s ease;"></div>
+      </div>
+    </div>
+
     <button class="btn btn-gerar" id="gerar">GERAR MINHA SEMANA DE MARMITAS<small>grátis · resultado na hora</small></button>
 
     <div class="plano-res" id="resultado" aria-live="polite">
-      <h3>Sua semana de marmitas</h3>
-      <p class="sub" id="resSub">Receitas montadas na hora pela fórmula do ebook — <b style="color:var(--verde)">tudo 100% testado e aprovado para congelamento</b> — com os seus gostos e dentro do seu orçamento:</p>
-      <ul class="cardapio" id="cardapio"></ul>
-      <button class="chip" id="regerar" style="background:var(--creme);border-color:#E3DDD0;color:var(--verde);margin-top:14px" aria-pressed="false">↻ Gerar outra combinação</button>
-      <div class="notas-freezer" id="notasFreezer" style="display:none">
-        <div class="t">🧊 Adaptações pró-freezer (é assim que o método funciona)</div>
-        <ul id="notasLista"></ul>
+      <!-- Loader Simulado -->
+      <div id="resLoader" style="display: none; text-align: center; padding: 30px 10px;">
+        <div class="spinner" style="width: 44px; height: 44px; border: 4px solid #E3DDD0; border-top-color: var(--laranja); border-radius: 50%; display: inline-block; animation: spin 1s linear infinite; margin-bottom: 14px;"></div>
+        <div id="loaderText" style="font-family: 'Bricolage Grotesque'; font-weight: 700; font-size: 1.15rem; color: var(--verde);">Analisando preferências...</div>
       </div>
-      <div class="plano-metricas">
-        <div class="pm"><div class="r">Custo por marmita</div><div class="v" id="pmMarmita">—</div></div>
-        <div class="pm"><div class="r">Gasto mensal (22 dias)</div><div class="v" id="pmMes">—</div></div>
-        <div class="pm eco"><div class="r">Economia em 1 ano</div><div class="v" id="pmAno">—</div></div>
+
+      <!-- Conteúdo do Resultado -->
+      <div id="resContent" style="display: none;">
+        <h3>Sua semana de marmitas</h3>
+        <p class="sub" id="resSub">Receitas montadas na hora pela fórmula do ebook — <b style="color:var(--verde)">tudo 100% testado e aprovado para congelamento</b> — com os seus gostos e dentro do seu orçamento:</p>
+        <ul class="cardapio" id="cardapio"></ul>
+        <button class="chip" id="regerar" style="background:var(--creme);border-color:#E3DDD0;color:var(--verde);margin-top:14px" aria-pressed="false">↻ Gerar outra combinação</button>
+        <div class="notas-freezer" id="notasFreezer" style="display:none">
+          <div class="t">🧊 Adaptações pró-freezer (é assim que o método funciona)</div>
+          <ul id="notasLista"></ul>
+        </div>
+        <div class="plano-metricas">
+          <div class="pm"><div class="r">Custo por marmita</div><div class="v" id="pmMarmita">—</div></div>
+          <div class="pm"><div class="r">Gasto mensal (22 dias)</div><div class="v" id="pmMes">—</div></div>
+          <div class="pm eco"><div class="r">Economia em 1 ano</div><div class="v" id="pmAno">—</div></div>
+        </div>
+        <span class="badge-orc ok" id="badgeOrc">✓ Cabe no seu orçamento</span>
+        <p class="sub" style="margin-top:14px">Gostou da amostra? O ebook traz o cardápio completo de 4 semanas, as 20 receitas com passo a passo, a lista de compras e o cronograma pra fazer tudo em 2h30.</p>
+        <a class="btn" href="#oferta">QUERO O PLANO COMPLETO POR R$ 19,90<small>acesso imediato</small></a>
       </div>
-      <span class="badge-orc ok" id="badgeOrc">✓ Cabe no seu orçamento</span>
-      <p class="sub" style="margin-top:14px">Gostou da amostra? O ebook traz o cardápio completo de 4 semanas, as 20 receitas com passo a passo, a lista de compras e o cronograma pra fazer tudo em 2h30.</p>
-      <a class="btn" href="#oferta">QUERO O PLANO COMPLETO POR R$ 19,90<small>acesso imediato</small></a>
     </div>
     <p class="nota" style="margin-top:16px">Custos por porção são estimativas médias para planejamento e variam por região.</p>
   </div>
@@ -461,8 +531,30 @@ document.querySelectorAll('#gostos .chip').forEach(ch => {
 // sliders
 const gasto = document.getElementById('gasto');
 const orcamento = document.getElementById('orcamento');
-gasto.addEventListener('input', () => document.getElementById('valorDia').textContent = fmt(gasto.value));
-orcamento.addEventListener('input', () => document.getElementById('valorOrc').textContent = fmt(orcamento.value));
+
+function atualizarEconomiaPrevia() {
+  const valGasto = parseInt(gasto.value, 10) * DIAS;
+  const valOrc = parseInt(orcamento.value, 10);
+  const ecoMes = Math.max(0, valGasto - valOrc);
+  const ecoAno = ecoMes * 12;
+  
+  document.getElementById('saveMes').textContent = fmt(ecoMes);
+  document.getElementById('saveAno').textContent = fmt(ecoAno);
+  
+  const pct = Math.min(100, Math.max(5, (ecoMes / 1230) * 100));
+  document.getElementById('saveProgress').style.width = pct + '%';
+}
+
+gasto.addEventListener('input', () => {
+  document.getElementById('valorDia').textContent = fmt(gasto.value);
+  atualizarEconomiaPrevia();
+});
+orcamento.addEventListener('input', () => {
+  document.getElementById('valorOrc').textContent = fmt(orcamento.value);
+  atualizarEconomiaPrevia();
+});
+
+atualizarEconomiaPrevia();
 
 // pontua um componente pelas preferências (+ ruído pra variar a cada geração)
 const score = (item, tags) => item.t.filter(t => tags.includes(t)).length * 2 + Math.random();
@@ -561,10 +653,49 @@ function gerarPlano(){
   return res;
 }
 
-document.getElementById('gerar').addEventListener('click', () => {
-  gerarPlano().scrollIntoView({behavior:'smooth', block:'nearest'});
+const btnGerar = document.getElementById('gerar');
+const resDiv = document.getElementById('resultado');
+const resLoader = document.getElementById('resLoader');
+const resContent = document.getElementById('resContent');
+const loaderText = document.getElementById('loaderText');
+
+btnGerar.addEventListener('click', () => {
+  resDiv.style.display = 'block';
+  resContent.style.display = 'none';
+  resLoader.style.display = 'block';
+  
+  resDiv.scrollIntoView({behavior:'smooth', block:'center'});
+  
+  const messages = [
+    "Filtrando ingredientes ideais...",
+    "Calculando economia sob medida...",
+    "Gerando cardápio pró-congelamento..."
+  ];
+  let msgIdx = 0;
+  const interval = setInterval(() => {
+    if (msgIdx < messages.length) {
+      loaderText.textContent = messages[msgIdx++];
+    }
+  }, 450);
+  
+  setTimeout(() => {
+    clearInterval(interval);
+    resLoader.style.display = 'none';
+    resContent.style.display = 'block';
+    gerarPlano();
+    resDiv.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }, 1500);
 });
-document.getElementById('regerar').addEventListener('click', () => { gerarPlano(); });
+
+document.getElementById('regerar').addEventListener('click', () => {
+  resContent.style.display = 'none';
+  resLoader.style.display = 'block';
+  setTimeout(() => {
+    resLoader.style.display = 'none';
+    resContent.style.display = 'block';
+    gerarPlano();
+  }, 600);
+});
 </script>
 </body>
 </html>
